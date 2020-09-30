@@ -19,13 +19,17 @@
                     repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
                     state: present
 
-          - name: Jenkins installation
+          - name: Jenkins installation and tomcat installation
             apt:
-                    name: jenkins
+                    name: "{{item}}"
+            
+            with_item:
+                - jenkins
+                - tomcat8
                     state: present
                     update_cache: yes
 
-          - name: To restart jenkins services
+          - name: To start jenkins services
             service:
                     name: jenkins
                     state: started
